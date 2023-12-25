@@ -8,19 +8,23 @@ import {
   Button,
   Box
 } from "@chakra-ui/react"
-
 import Main from '../layouts/Main';
 import Charts from './chart/Charts'
+import Footer from '../components/Footer';
 
 export default function Home() {
-  const token = window.localStorage.getItem("token");
   const mediaMatch = window.matchMedia('(min-width: 900px)');
   const [matches, setMatches] = useState(mediaMatch.matches);
   const matchHandler = e => setMatches(e.matches);
   const chartRef = useRef(null)
+  const sourceRef = useRef(null)
 
   const handleScroll = () => {
     chartRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  const handleSourceCode = () => {
+    sourceRef.current?.scrollIntoView({ behavior: 'smooth' });
   }
 
   useEffect(function () {
@@ -39,20 +43,21 @@ export default function Home() {
           Embark on an exhilarating journey through Spotify's top-tier talent, from the hottest tracks to the
           most-{matches ? <br /> : null} followed  artists  all on our immersive platform.</Text>
         <Stack direction={{base: "column", sm: "row"}} alignItems="center" spacing={{base: 0, sm: 3}}>
-          <Link to={token ? '/' : '/search'} >
-            <Button onClick={token ? handleScroll : null} rounded="lg" bg="primaryblue" my={{base: 3, md: 4}} color="white" _hover={{ bg: "darkblue" }} _focus={{ boxShadow: "none" }} >{token ? 'See Charts' : 'Login with Spotify'}</Button>
+          <Link to={'/'} >
+            <Button onClick={handleScroll} rounded="lg" bg="primaryblue" my={{base: 3, md: 4}} color="white" _hover={{ bg: "darkblue" }} _focus={{ boxShadow: "none" }} >Get Started</Button>
           </Link>
-          <Link to="/search" >
-            <Button variant="outline" fontWeight="medium" rounded="lg" my={{base: 0, sm: 3, md: 4}}  _hover={{bg: useColorModeValue("lightgray", "lightdark1")}}  _focus={{ boxShadow: "none" }}>Explore Now &nbsp; <i className="fa-solid fa-arrow-right"></i> </Button>
-          </Link>
+          <Button onClick={handleSourceCode} variant="outline" fontWeight="medium" display="flex" alignItems="center" rounded="lg" my={{ base: 0, sm: 3, md: 4 }} _hover={{ bg: useColorModeValue("lightgray", "lightdark1") }} _focus={{ boxShadow: "none" }}><i className="fa-brands fa-github fa-lg"></i>&nbsp;&nbsp;Source Code</Button>
         </Stack>
       </Stack>
     
       <div ref={chartRef}>
         <Charts  />
       </div>
-        
     </Main>
+
+    <div ref={sourceRef}>
+      <Footer ref={handleSourceCode} />
+    </div>
     </>
   );
 }
