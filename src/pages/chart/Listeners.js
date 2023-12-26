@@ -1,12 +1,13 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { 
   Stack,
   Skeleton, 
   useColorModeValue,
-  chakra,
   Flex,
   Icon,
-  Button
+  Button,
+  Box,
+  useColorMode
 } from "@chakra-ui/react";
 import TableChart from "../../components/TableChart";
 import Loading from "../../components/Loading";
@@ -24,26 +25,10 @@ const Listeners = () => {
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState("")
   const [curPage, setCurPage] = useState(1);
+  const { colorMode } = useColorMode()
 
   const handleSearchKey = (e) => {
     setValue(e.target.value)
-  }
-
-  const activeStyle = {
-    bg: "primaryblue",
-    _dark: {
-      bg: "primaryblue",
-    },
-    color: "white",
-  };
-
-  const normalStyle = {
-    bg: "lightgray",
-    _dark: {
-      bg: "lightdark1",
-      color: "ptext"
-    },
-    color: "gray.700",
   }
 
   useEffect(() => {
@@ -84,10 +69,8 @@ const Listeners = () => {
     pageNumbers.push(i);
   }
 
-  const arrayPageNumber = pageNumbers.map((number) => {
-    return number
-  })
-  const lastIndexNumber = arrayPageNumber[arrayPageNumber.length - 1] 
+  const arrayPageNumber = pageNumbers.map((number) => number) // [1,2,3,4,5]
+  const lastIndexNumber = arrayPageNumber[arrayPageNumber.length - 1] // 5
 
   const handleChangePage = (number) => {
     setCurPage(number)
@@ -116,8 +99,9 @@ const Listeners = () => {
       </Skeleton>
       <Flex
         w="full"
-        alignItems="center"
-        justifyContent="center"
+        alignItems={{md:"center"}}
+        justifyContent={{md: "center"}}
+        overflowY="auto"
       >
         <Flex>
           <Button
@@ -143,25 +127,19 @@ const Listeners = () => {
             />
           </Button>
           {pageNumbers.map((number) => (
-            <Button
+            <Box
               mx={1}
               px={4}
               py={2}
               rounded="md"
-              bg="lightgray"
-              _dark={{
-                bg: "lightdark1",
-                color: "ptext"
-              }}
-              color="gray.700"
               key={number} 
               onClick={() => handleChangePage(number)}
-          
-              style={curPage === number ? activeStyle : normalStyle} 
+              bg={curPage === number ? "primaryblue" : colorMode === "dark" ?  "lightdark1" : "lightgray"}
+              color={curPage === number ? "white" : colorMode === "dark" ? "ptext" : "gray.700"}
+              _hover={{cursor: "pointer",  bg: curPage === number ? null : colorMode === "dark" ? "lightdark2" : "gray.200", color: curPage === number ? null : colorMode === "dark" ? "white" : "black"}}
             >
               {number}
-            </Button>
-            
+            </Box>
           ))}
           <Button
             onClick={handleNextPage}
