@@ -1,6 +1,8 @@
 # Emortfy
 <a href="https://emortfy.vercel.app" target="_blank">
-  <img src="/cover/ss1.png" alt="website" width="754" />
+  <center>
+    <img src="/cover/mobile.png" alt="website" width="150" />
+  </center>
 </a>
 
 Check the the <a href="https://emortfy.vercel.app" target="_blank">demo</a>
