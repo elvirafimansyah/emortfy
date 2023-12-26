@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { 
   Stack,
   Skeleton, 
@@ -17,6 +17,7 @@ const Listeners = () => {
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState("")
   const [curPage, setCurPage] = useState(1);
+  const filterRef = useRef(null)
 
   const handleSearchKey = (e) => {
     setValue(e.target.value)
@@ -66,23 +67,28 @@ const Listeners = () => {
   
   const handleChangePage = (number) => {
     setCurPage(number)
+    filterRef.current?.scrollIntoView({ behavior: 'smooth' });
   }
+
   const handleNextPage = () => {
     if (curPage !== lastIndexNumber) {
       setCurPage(curPage + 1)
+      filterRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }
   const handlePrevPage = () => {
     if (curPage !== 1) {
       setCurPage(curPage - 1)
+      filterRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }
+
 
   return (
     <Stack mx={-4}>
       <TitleChart title="Spotify Top Artists by Monthly Listeners" time={update} />
       <Skeleton rounded="md" startColor={useColorModeValue('lightgray','lightdark2')} endColor={useColorModeValue('gray.100','lightdark1')} isLoaded={!loading}>
-        <FilterSearch  handleSearchKey={handleSearchKey}  />
+        <FilterSearch  handleSearchKey={handleSearchKey} handleRef={filterRef} />
       </Skeleton>
       <Skeleton rounded="md" startColor={useColorModeValue('lightgray', 'lightdark2')} endColor={useColorModeValue('gray.100', 'lightdark1')} isLoaded={!loading}>
         {

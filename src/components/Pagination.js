@@ -14,7 +14,7 @@ const Pagination = ({handlePrevPage, pageNumbers, handleChangePage, curPage, han
       w="full"
       alignItems={{ md: "center" }}
       justifyContent={{ md: "center" }}
-      overflowY="auto"
+      overflowY={"auto"}
       my={3}
     >
       <Flex>

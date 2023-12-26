@@ -8,9 +8,9 @@ import {
 } from "@chakra-ui/react";
 import { IoSearch } from "react-icons/io5";
 
-const FilterSearch = ({ value, handleSearchKey, focus }) => {
+const FilterSearch = ({ value, handleSearchKey, focus, handleRef }) => {
   return (
-    <Stack pb={3} >
+    <Stack pb={3} ref={handleRef}>
       <InputGroup maxW={{sm: "xs"}} alignSelf="end">
         <InputLeftElement
           pointerEvents="none"
