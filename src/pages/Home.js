@@ -6,7 +6,6 @@ import {
   useColorModeValue,
   Stack,
   Button,
-  Box
 } from "@chakra-ui/react"
 import Main from '../layouts/Main';
 import Charts from './chart/Charts'
@@ -38,7 +37,7 @@ export default function Home() {
     <Main>
       <Stack direction="column" spacing={3} py={{base: 10, md: 20, xl: 24}} alignItems="center" >
         <Text align="center" color="primaryblue" fontWeight="semibold">Spotify Charts</Text>
-        <Heading fontSize={{base: '32px', md: '38px', lg: "42px"}} align="center" fontWeight="bold" >Explore Chart-Topping Artists, Search the Rhythmic Realm, and Dive into the Pulse of Popularity</Heading>
+        <Heading fontSize={{base: '32px', md: '38px', lg: "45px", xl: "48px"}} align="center" fontWeight="bold" >Explore Chart-Topping Artists and Dive into the Pulse of Popularity</Heading>
         <Text  color={useColorModeValue("gray.700", "ptext")} fontSize={{ base: '14px', md: '16px', lg: "16px" }} align="center">
           Embark on an exhilarating journey through Spotify's top-tier talent, from the hottest tracks to the
           most-{matches ? <br /> : null} followed  artists  all on our immersive platform.</Text>

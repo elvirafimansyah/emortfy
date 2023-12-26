@@ -37,7 +37,7 @@ const Listeners = () => {
     }
     getListener()
     
-  }, [listener])
+  }, [])
 
   useEffect(() => {
     if (listener.length > 0) {
@@ -58,11 +58,14 @@ const Listeners = () => {
   const lastIndexNumber = arrayPageNumber[arrayPageNumber.length - 1] // 5
 
   useEffect(() => {
-    const paginationListener = listener.slice(firstIndex, lastIndex)
-    setRecentListener(paginationListener)
-    const filteredData = recentListener.filter(({ artist, id }) => artist.toLowerCase().trim().includes(value.toLowerCase().trim()) || id.toString().includes(value))
-    setFilterListener(filteredData)
-  }, [curPage ,listener, value,firstIndex, lastIndex, recentListener ])
+    const paginationListener = listener.slice(firstIndex, lastIndex);
+    setRecentListener(paginationListener);
+  }, [listener, firstIndex, lastIndex]);
+
+  useEffect(() => {
+    const filteredData = recentListener.filter(({ artist, id }) => artist.toLowerCase().trim().includes(value.toLowerCase().trim()) || id.toString().includes(value));
+    setFilterListener(filteredData);
+  }, [value, recentListener]);
 
   
   const handleChangePage = (number) => {

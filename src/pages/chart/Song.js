@@ -6,7 +6,6 @@ import {
 } from "@chakra-ui/react";
 
 import TableChart from "../../components/TableChart";
-import Loading from "../../components/Loading";
 import TitleChart from "../../components/TitleChart";
 import FilterSearch from "../../components/Filter";
 import Empty from "../../components/Empty";
@@ -29,11 +28,6 @@ const Song = () => {
         const req = await fetch(api_song)
         const resp = await req.json()
         setSong(resp.data)
-        if (song) {
-          const lastUpdate = song[0].lastupdate
-          const dateUpdate = new Date(lastUpdate).toLocaleString("en-US")
-          setUpdate(dateUpdate)
-        }
         setLoading(false)
       } catch(err) {
         console.error("error")
@@ -41,7 +35,16 @@ const Song = () => {
     }
     getSong()
 
-  }, [song])
+  }, [])
+
+  useEffect(() => {
+    if (song.length > 0) {
+      const lastUpdate = song[0].lastupdate;
+      const dateUpdate = new Date(lastUpdate).toLocaleString("en-US");
+      setUpdate(dateUpdate);
+    }
+  }, [song]);
+
 
   useEffect(() => {
     const filteredData = song.filter(({ category, title }) => category.toLowerCase().trim().includes(value.toLowerCase().trim()) || title.toLowerCase().trim().includes(value.toLowerCase().trim()))
