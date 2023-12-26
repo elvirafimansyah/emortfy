@@ -15,6 +15,7 @@ const Pagination = ({handlePrevPage, pageNumbers, handleChangePage, curPage, han
       alignItems={{ md: "center" }}
       justifyContent={{ md: "center" }}
       overflowY="auto"
+      my={3}
     >
       <Flex>
         <Button

@@ -46,25 +46,22 @@ const Listeners = () => {
     }
   }, [listener]); 
   
-  const itemsPerPage = 5;
+  const itemsPerPage = 50;
   const lastIndex = curPage * itemsPerPage
   const firstIndex = lastIndex - itemsPerPage
   const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(listener.length / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
   const arrayPageNumber = pageNumbers.map((number) => number) // [1,2,3,4,5]
   const lastIndexNumber = arrayPageNumber[arrayPageNumber.length - 1] // 5
 
   useEffect(() => {
-    const filteredData = listener.filter(({ artist, id }) => artist.toLowerCase().trim().includes(value.toLowerCase().trim()) || id.toString().includes(value))
-    setFilterListener(filteredData)
-
-    
-    const paginationListener = filteredData.slice(firstIndex, lastIndex)
+    const paginationListener = listener.slice(firstIndex, lastIndex)
     setRecentListener(paginationListener)
-  }, [curPage ,listener, value,firstIndex, lastIndex ])
-
-  for (let i = 1; i <= Math.ceil(filterListener.length / itemsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+    const filteredData = recentListener.filter(({ artist, id }) => artist.toLowerCase().trim().includes(value.toLowerCase().trim()) || id.toString().includes(value))
+    setFilterListener(filteredData)
+  }, [curPage ,listener, value,firstIndex, lastIndex, recentListener ])
 
   
   const handleChangePage = (number) => {
@@ -89,17 +86,19 @@ const Listeners = () => {
       </Skeleton>
       <Skeleton rounded="md" startColor={useColorModeValue('lightgray', 'lightdark2')} endColor={useColorModeValue('gray.100', 'lightdark1')} isLoaded={!loading}>
         {
-          !filterListener.length ? <Empty /> : <TableChart type="listener" data={recentListener} />
+          !filterListener.length ? <Empty /> : <TableChart type="listener" data={filterListener} />
         }
       </Skeleton>
-      <Pagination 
-        handlePrevPage={handlePrevPage}
-        handleNextPage={handleNextPage}
-        handleChangePage={handleChangePage}
-        curPage={curPage}
-        pageNumbers={pageNumbers}
-        
-      />
+      <Skeleton rounded="md" startColor={useColorModeValue('lightgray', 'lightdark2')} endColor={useColorModeValue('gray.100', 'lightdark1')} isLoaded={!loading} >
+        <Pagination 
+          handlePrevPage={handlePrevPage}
+          handleNextPage={handleNextPage}
+          handleChangePage={handleChangePage}
+          curPage={curPage}
+          pageNumbers={pageNumbers}
+          
+        />
+      </Skeleton>
     </Stack>
   )
 }
