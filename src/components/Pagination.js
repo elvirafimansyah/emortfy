@@ -1,59 +1,35 @@
 import {
   Flex,
   Icon,
-  chakra
+  Button,
+  Box,
+  useColorMode
 } from "@chakra-ui/react";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
-const Pagination = ({itemsPerPage,totalItems, changePage, prevPage, nextPage, curPage}) => {
-  const pageNumbers = [];
-  const activeStyle = {
-    bg: "primaryblue",
-    _dark: {
-      bg: "primaryblue",
-    },
-    color: "white",
-  };
-
-  const normalStyle = {
-    bg: "lightgray",
-    _dark: {
-      bg: "lightdark1",
-      color: "ptext"
-    },
-    color: "gray.700",
-  }
-
-  const PagButton = (props) => {
-    return (
-      <chakra.button
-        mx={1}
-        px={4}
-        py={2}
-        rounded="md"
-        bg="lightgray"
-        _dark={{
-          bg: "lightdark1",
-          color: "ptext"
-        }}
-        color="gray.700"
-      >
-        {props.children}
-      </chakra.button>
-    );
-  };
-
-  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+const Pagination = ({handlePrevPage, pageNumbers, handleChangePage, curPage, handleNextPage}) => {
+  const { colorMode } = useColorMode()
   return (
     <Flex
       w="full"
-      alignItems="center"
-      justifyContent="center"
+      alignItems={{ md: "center" }}
+      justifyContent={{ md: "center" }}
+      overflowY="auto"
     >
       <Flex>
-        <PagButton onClick={prevPage}>
+        <Button
+          onClick={handlePrevPage}
+          mx={1}
+          px={4}
+          py={2}
+          rounded="md"
+          bg="lightgray"
+          _dark={{
+            bg: "lightdark1",
+            color: "ptext"
+          }}
+          color="gray.700"
+        >
           <Icon
             as={IoIosArrowBack}
             color="gray.700"
@@ -62,12 +38,35 @@ const Pagination = ({itemsPerPage,totalItems, changePage, prevPage, nextPage, cu
             }}
             boxSize={4}
           />
-        </PagButton>
+        </Button>
         {pageNumbers.map((number) => (
-          <PagButton key={number} onClick={() => changePage(number)} style={curPage === number ? activeStyle : normalStyle} >{number}</PagButton>
+          <Box
+            mx={1}
+            px={4}
+            py={2}
+            rounded="md"
+            key={number}
+            onClick={() => handleChangePage(number)}
+            bg={curPage === number ? "primaryblue" : colorMode === "dark" ? "lightdark1" : "lightgray"}
+            color={curPage === number ? "white" : colorMode === "dark" ? "ptext" : "gray.700"}
+            _hover={{ cursor: "pointer", bg: curPage === number ? null : colorMode === "dark" ? "lightdark2" : "gray.200", color: curPage === number ? null : colorMode === "dark" ? "white" : "black" }}
+          >
+            {number}
+          </Box>
         ))}
-        
-        <PagButton onClick={nextPage}>
+        <Button
+          onClick={handleNextPage}
+          mx={1}
+          px={4}
+          py={2}
+          rounded="md"
+          bg="lightgray"
+          _dark={{
+            bg: "lightdark1",
+            color: "ptext"
+          }}
+          color="gray.700"
+        >
           <Icon
             as={IoIosArrowForward}
             color="gray.700"
@@ -76,7 +75,7 @@ const Pagination = ({itemsPerPage,totalItems, changePage, prevPage, nextPage, cu
             }}
             boxSize={4}
           />
-        </PagButton>
+        </Button>
       </Flex>
     </Flex>
   )

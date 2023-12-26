@@ -1,12 +1,10 @@
 import {
   Stack,
-  Button,
   Input,
   InputGroup,
   Box,
   InputLeftElement,
   useColorModeValue,
-  Skeleton
 } from "@chakra-ui/react";
 import { IoSearch } from "react-icons/io5";
 

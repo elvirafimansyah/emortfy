@@ -25,7 +25,6 @@ const Listeners = () => {
   const [loading, setLoading] = useState(true);
   const [value, setValue] = useState("")
   const [curPage, setCurPage] = useState(1);
-  const { colorMode } = useColorMode()
 
   const handleSearchKey = (e) => {
     setValue(e.target.value)
@@ -97,7 +96,7 @@ const Listeners = () => {
           !filterListener.length ? <Empty /> : <TableChart type="listener" data={recentListener} />
         }
       </Skeleton>
-      <Flex
+      {/* <Flex
         w="full"
         alignItems={{md:"center"}}
         justifyContent={{md: "center"}}
@@ -164,7 +163,15 @@ const Listeners = () => {
             />
           </Button>
         </Flex>
-      </Flex>
+      </Flex> */}
+      <Pagination 
+        handlePrevPage={handlePrevPage}
+        handleNextPage={handleNextPage}
+        handleChangePage={handleChangePage}
+        curPage={curPage}
+        pageNumbers={pageNumbers}
+        
+      />
     </Stack>
   )
 }
