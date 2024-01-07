@@ -113,15 +113,15 @@ const TableChart = ({type, data}) => {
                   {
                     type === "listener" ? data.listeners : 
                     type === "artist" ? data.streams : 
-                    type === "album" ? data.streams.toLocaleString('id-ID') :
+                    type === "album" ? data.streams ? data.streams.toLocaleString('id-ID') : "-" :
                     data.title.split(' - ')[0]
                   }
                 </Th>
                 <Th isNumeric style={Object.assign(midStyle, tableRow(matches), borderSytle)}>
                   {
                     type === "listener" ? data.peak : 
-                    type === "artist" ? data.daily.toLocaleString('id-ID')  : 
-                    type === "album" ? data.daily.toLocaleString('id-ID') :
+                    type === "artist" ? data.daily ? data.daily.toLocaleString('id-ID') : "-" :  
+                    type === "album" ? data.daily ? data.daily.toLocaleString("id-ID") : "-" :
                     data.title.split(' - ')[1]
                   }
                 </Th>
